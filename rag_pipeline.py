@@ -12,7 +12,7 @@ from llm import call_llm, DEFAULT_MODEL
 
 
 # Configuration
-TOP_K = 7  # Number of passages to retrieve
+TOP_K = 10  # Number of passages to retrieve
 LLM_MODEL = "meta-llama/llama-3.1-8b-instruct"
 MAX_TOKENS = 50 # Max tokens for the answer (short and concise)
 TEMPERATURE = 0.0 # Deterministic answers
@@ -61,7 +61,7 @@ def answer_question(question, retriever):
         Answer string
     """
     # Retrieve relevant passages
-    passages = retriever.retrieve(question, top_k=TOP_K)
+    passages = retriever.retrieve(question, top_k=TOP_K, bm25_weight=0.0, dense_weight=1.0)
     
     if not passages:
         # Fallback: try to answer without context
